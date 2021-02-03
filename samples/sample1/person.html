@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+	<title>Person List</title>
+	<link rel='stylesheet' href='person.css'>
+</head>
+
+<body>
+
+  <table class="table table-striped fixed">
+    <thead>
+      <tr>
+        <th th:text="#{person.lastName}">Last Name</th>
+        <th th:text="#{person.firstName}">First Name</th>
+        <th th:text="#{person.gender}">Gender</th>
+        <th th:text="#{person.dateOfBirth}">Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td th:text="${person.lastName}">Doe</td>
+        <td th:text="${person.firstName}">John</td>
+        <td th:text="${person.gender}">MALE</td>
+        <td th:text="${person.dateOfBirth}">13/09/1977</td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

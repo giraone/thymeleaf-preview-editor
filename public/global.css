@@ -1,0 +1,23 @@
+body {
+  font-size: 11px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4 {
+  margin-left: 0.5em;
+}
+
+.no-margin {
+  margin: 0;
+  padding: 0;
+}
+
+.full-width-and-height {
+  width: 100%;
+  max-width: 100% !important;
+  height: 100vh;
+  max-height: 100vh !important;
+}
+
+

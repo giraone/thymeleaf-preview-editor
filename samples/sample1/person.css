@@ -1,0 +1,16 @@
+table.table {
+  width: 100%;
+  background-color: aquamarine;
+}
+
+table.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table.fixed {table-layout: fixed; width: 100%;} /*Setting the table width is needed!*/
+table.fixed td {overflow: hidden;} /*Hide text outside the cell.*/
+table.fixed td:nth-of-type(1) {width: 30%;} /*Setting the width of column 1.*/
+table.fixed td:nth-of-type(2) {width: 30%;} /*Setting the width of column 2.*/
+table.fixed td:nth-of-type(3) {width: 20%;} /*Setting the width of column 3.*/
+table.fixed td:nth-of-type(4) {width: 20%;} /*Setting the width of column 4.*/
+
