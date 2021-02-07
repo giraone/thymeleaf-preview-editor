@@ -16,18 +16,51 @@
   let htmlErrorMessages;
 
   const process = function(e) {
-    const jsonData = jsonEditor.getValue();
-    const htmlData = htmlEditor.getValue();
-    const cssData = cssEditor.getValue();
-    alert('process ' + processUrl + ' ' + e.detail.name + ' ' + jsonData.length + ' ' + htmlData.length + ' ' + cssData.length);
-  };
-  
-  const showPreview = function(e) {
-    const iframe = document.getElementById(htmlPreview.id);
-    if (!iframe) {
-      alert('iframe ' + previewFrame + ' not found!');
+
+    const jsonContent = jsonEditor.getValue();
+    const templateContent = htmlEditor.getValue();
+    const cssContent = cssEditor.getValue();
+    console.log('process ' + processUrl + ' ' + e.detail.name + ' ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
+    
+    const formData = new FormData();
+    console.log('1');
+    formData.append('data', new Blob([jsonContent], { type: 'application/json;charset=UTF-8' }), 'data.json');
+    console.log('1');
+    formData.append('template', new Blob([templateContent], { type: 'text/html;charset=UTF-8'}), 'template.html');
+    console.log('1');
+    if (cssContent.length > 0) {
+      formData.append('css', new Blob([cssContent], { type: 'text/css;charset=UTF-8'}), 'template.css');
     }
-    iframe.srcdoc = dataSet.htmlData; // HTML5!
+
+    console.log('upload ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
+
+    let req = new XMLHttpRequest();
+    req.open('POST', processUrl);
+    req.setRequestHeader('Accept', 'text/html');
+
+    req.onload = function() {
+        if (req.status == 200) {
+          showResponse({htmlContent: req.responseText});
+        } else {
+            alert('Error: ' + req.statusText);
+            showResponse({
+              errorMessages: 'Status Code: ' + req.statusCode
+                + '\r\nStatus Text: ' + req.statusText,
+              htmlContent: req.responseText
+            });
+        }
+    }
+
+    req.send(formData);
+  };
+
+  function showResponse(dataSet) {
+    if (dataSet.errorMessages) {
+      htmlErrorMessages.showErrorMessages(dataSet.errorMessage);
+    }
+    if (dataSet.htmlContent) {
+      htmlPreview.showHtmlContent(dataSet.htmlContent);
+    }
   };
 
 </script>

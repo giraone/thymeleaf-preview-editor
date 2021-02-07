@@ -26,19 +26,10 @@
           schema: {
             type: "object",
             properties: {
-              lastName: {
+              name: {
                 type: "string",
-                description: "The person's last name.",
-              },
-              firstName: {
-                type: "string",
-                description: "The person's first name.",
-              },
-              gender: {
-                type: "string",
-                enum: ["FEMALE", "MALE", "DIVERS", "UNKNOWN"],
-                description: "The person's gender.",
-              },
+                description: "The user's last name.",
+              }
             },
           },
         },
@@ -48,8 +39,7 @@
     console.log("Creating new monaco JSON editor object");
     const jsonLines = [
       "{",
-      '\t"lastName": "Smith",',
-      '\t"gender": "NOT-KNOWN"',
+      '\t"name": "User"',
       "}",
     ].join("\n");
     const model = monaco.editor.createModel(jsonLines, "json", modelUri);

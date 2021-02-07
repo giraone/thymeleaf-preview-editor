@@ -15,7 +15,7 @@
   function initMonaco() {
     console.log("Creating new monaco HTML editor object");
     editor = monaco.editor.create(document.getElementById("container-" + id), {
-      value: ["<h1>Title</h1>", "<pre>Code</pre>"].join("\n"),
+      value: ["<h1>Hello <span th:text=\"${name}\">World</span></h1>"].join("\n"),
       language: "html",
       theme: "vs-dark",
       lineNumbers: "on",
