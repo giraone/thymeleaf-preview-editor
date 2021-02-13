@@ -9,13 +9,23 @@
   // The monaco editor object
   let editor;
   // The FileReader-Component object
-  let fileReaderData;
+  let fileReader;
 
 
   function initMonaco() {
-    console.log("Creating new monaco HTML editor object");
     editor = monaco.editor.create(document.getElementById("container-" + id), {
-      value: ["<h1>Hello <span th:text=\"${name}\">World</span></h1>"].join("\n"),
+      value: ["<!DOCTYPE html>",
+            "<html lang=\"en\">",
+            "<head>",
+            " <meta charset='utf-8'>",
+            " <meta name='viewport' content='width=device-width,initial-scale=1'>",
+            " <style></style>",
+            "</head>",
+            "<body>",
+            " <h1>Hello <span th:text=\"${name}\" class=\"strong\">World</span></h1>",
+            "</body>",
+            "</html>"
+          ].join("\n"),
       language: "html",
       theme: "vs-dark",
       lineNumbers: "on",
@@ -30,7 +40,7 @@
       contextMenuGroupId: "navigation",
       contextMenuOrder: 1.0,
       run: function () {
-        fileReaderData.open();
+        fileReader.open();
         return null;
       },
     });
@@ -50,7 +60,7 @@
 
   function dispose() {
     // Dispose editor via Svelte's onmount return
-    console.log("Disposing monaco HTML editor " + editor);
+    // console.log("Disposing monaco HTML editor " + editor);
     if (editor) {
       editor.dispose();
       editor = null;
@@ -64,7 +74,7 @@
   //-- Lifecycle functions -----------------------------------------------------------
 
   onMount(async () => {
-    console.log("HtmlEditor.onMount");
+    // console.log("HtmlEditor.onMount");
     initMonaco();
     return dispose;
   });
@@ -73,11 +83,16 @@
 
   export const htmlEditor = {
     getValue() {
-      console.log('HtmlEditor.getValue ' + editor.getValue());
+      // console.log('HtmlEditor.getValue ' + editor.getValue());
       if (editor != null) {
         return editor.getValue();
       } else {
         return null;
+      }
+    },
+    setValue(value) {
+      if (editor != null) {
+        editor.setValue(value);
       }
     }
   };
@@ -88,8 +103,8 @@
 
 <!-- We have only one div container for the editor -->
 <div id="container-{id}" class="code-editor" />
-<!-- And an invisible file reader -->
-<FileReader accept=".html" bind:fileReader={fileReaderData} on:load={loadHtmlData} />
+<!-- And an invisible file reader component -->
+<FileReader accept=".html" bind:fileReader={fileReader} on:load={loadHtmlData} />
 
 <!-- CSS ------------------------------------------------------------------------- -->
 

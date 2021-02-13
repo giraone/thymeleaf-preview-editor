@@ -22,7 +22,7 @@
   .error-messages {
     width: 100%;
     min-height: 100px;
-    height: 30vh;
+    height: 17.5vh;
 
     background-color: white;
     color: black;

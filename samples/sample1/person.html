@@ -4,26 +4,31 @@
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width,initial-scale=1'>
 	<title>Person List</title>
-	<link rel='stylesheet' href='person.css'>
+	<style></style>
 </head>
 
 <body>
-
+  <h1>
+      <span th:text="${groupName}">List</span>
+      <span> (</span>
+      <span th:text="${#dates.format(new java.util.Date(), 'dd.MM.yyyy')}">13.12.2011</span>
+      <span>)</span>
+  </h1>
   <table class="table table-striped fixed">
     <thead>
       <tr>
-        <th th:text="#{person.lastName}">Last Name</th>
-        <th th:text="#{person.firstName}">First Name</th>
-        <th th:text="#{person.gender}">Gender</th>
-        <th th:text="#{person.dateOfBirth}">Date of Birth</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Gender</th>
+        <th>Date of Birth</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr th:each="person: ${list}">
         <td th:text="${person.lastName}">Doe</td>
         <td th:text="${person.firstName}">John</td>
         <td th:text="${person.gender}">MALE</td>
-        <td th:text="${person.dateOfBirth}">13/09/1977</td>
+        <td th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd.MM.yyyy').format(T(java.time.format.DateTimeFormatter).ISO_DATE.parse(person.dateOfBirth))}">-</td>
       </tr>
     </tbody>
   </table>

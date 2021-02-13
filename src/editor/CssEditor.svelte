@@ -9,13 +9,12 @@
   // The monaco editor object
   let editor;
   // The FileReader-Component object
-  let fileReaderData;
+  let fileReader;
 
 
   function initMonaco() {
-    console.log("Creating new monaco CSS editor object");
     editor = monaco.editor.create(document.getElementById("container-" + id), {
-      value: [""].join("\n"),
+      value: [".strong {", "\tcolor: red;", "}"].join("\n"),
       language: "css",
       theme: "vs-dark",
       lineNumbers: "on",
@@ -30,7 +29,7 @@
       contextMenuGroupId: "navigation",
       contextMenuOrder: 1.0,
       run: function () {
-        fileReaderData.open();
+        fileReader.open();
         return null;
       },
     });
@@ -50,7 +49,7 @@
 
   function dispose() {
     // Dispose editor via Svelte's onmount return
-    console.log("Disposing monaco CSS editor " + editor);
+    // console.log("Disposing monaco CSS editor " + editor);
     if (editor) {
       editor.dispose();
       editor = null;
@@ -64,7 +63,7 @@
   //-- Lifecycle functions -----------------------------------------------------------
 
     onMount(async () => {
-    console.log("CssEditor.onMount");
+    // console.log("CssEditor.onMount");
     initMonaco();
     return dispose;
   });
@@ -78,6 +77,11 @@
       } else {
         return null;
       }
+    },
+    setValue(value) {
+      if (editor != null) {
+        editor.setValue(value);
+      }
     }
   };
 
@@ -87,8 +91,8 @@
 
 <!-- We have only one div container for the editor -->
 <div id="container-{id}" class="code-editor" />
-<!-- And an invisible file reader -->
-<FileReader accept=".css" bind:fileReader={fileReaderData} on:load={loadCssData} />
+<!-- And an invisible file reader component -->
+<FileReader accept=".css" bind:fileReader={fileReader} on:load={loadCssData} />
 
 <!-- CSS ------------------------------------------------------------------------- -->
 

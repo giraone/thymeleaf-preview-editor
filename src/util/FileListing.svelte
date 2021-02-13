@@ -2,30 +2,22 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  export let accept = '*';
   let fileinput;
 
   const onFileSelected = function(e) {
-    const fileObject = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      dispatch("load", e.target.result);
-    };
-    reader.onerror = (e) => {
-      alert('File cannot be read!' + JSON.stringify(e))
-    };
-    reader.readAsText(fileObject);
+    const fileObjects = e.target.files;
+    dispatch('load', fileObjects);
   };
 
   //-- Exported functions ------------------------------------------------------------
 
   // We need an object, that contains a function - this can be called from the parent component
-  export const fileReader = {
+  export const fileListing = {
     open() {
       fileinput.click();
     }
   };
-
+  
 </script>
 
 <!-- HTML ------------------------------------------------------------------------ -->
@@ -34,7 +26,7 @@
 <input
   style="display:none"
   type="file"
-  accept="{accept}"
+  multiple="true"
   on:change={(e) => onFileSelected(e)}
   bind:this={fileinput}
 />

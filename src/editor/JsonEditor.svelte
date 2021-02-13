@@ -13,7 +13,7 @@
   let fileReaderSchema;
 
   function initMonaco() {
-    console.log("Configure JSON language support with schemas for Monaco");
+    // console.log("Configure JSON language support with schemas for Monaco");
     // configure the JSON language support with schemas and schema associations
     const jsonSchemaUriString = "file://content/sample1/json-schema.json";
     const modelUri = monaco.Uri.parse(jsonSchemaUriString); // a made up unique URI for our model
@@ -28,6 +28,7 @@
             properties: {
               name: {
                 type: "string",
+                required: true,
                 description: "The user's last name.",
               }
             },
@@ -36,10 +37,10 @@
       ],
     });
 
-    console.log("Creating new monaco JSON editor object");
+    // console.log("Creating new monaco JSON editor object");
     const jsonLines = [
       "{",
-      '\t"name": "User"',
+      '\t"name": "User of Thymeleaf Editor"',
       "}",
     ].join("\n");
     const model = monaco.editor.createModel(jsonLines, "json", modelUri);
@@ -92,26 +93,58 @@
 
   function dispose() {
     // Dispose editor via Svelte's onmount return
-    console.log("Disposing monaco JSON editor " + editor);
+    // console.log("Disposing monaco JSON editor " + editor);
     if (editor) {
       editor.dispose();
       editor = null;
     }
   }
 
-  function loadJsonData(customEvent) {
-    editor.setValue(customEvent.detail);
+  function loadJsonData(data) {
+    editor.setValue(data);
   }
 
-  function loadJsonSchema(customEvent) {
-    const model = monaco.editor.createModel(customEvent.detail, "json");
+  function loadJsonSchema(schema) {
+
+    /*
+    if (editor.getModel() != null) {
+      editor.setModel(null); // Detach old model
+      return;
+    }
+    */
+    const jsonSchema = JSON.parse(schema);
+    const schemaUri = jsonSchema['$id'];
+    if (schemaUri == null) {
+      schemaUri = "file://content/schema-" + Math.floor(Math.random() * 1000000) +".json";
+    }
+    const modelUri = monaco.Uri.parse(schemaUri);
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+      validate: true,
+      schemas: [
+        {
+          uri: schemaUri, // id of the schema
+          fileMatch: [modelUri.toString()], // associate with our model
+          schema: jsonSchema
+        }
+      ]
+    });
+
+    const model = monaco.editor.createModel(schema, "json", modelUri);
     editor.setModel(model);
+  }
+
+  function onLoadJsonData(customEvent) {
+    loadJsonData(customEvent.detail);
+  }
+
+  function onLoadJsonSchema(customEvent) {
+    loadJsonSchema(customEvent.detail);
   }
 
   //-- Lifecycle functions -----------------------------------------------------------
 
   onMount(async () => {
-    console.log("JsonEditor.onMount");
+    // console.log("JsonEditor.onMount");
     initMonaco();
     return dispose;
   });
@@ -120,13 +153,14 @@
 
   export const jsonEditor = {
     getValue() {
-      console.log("JsonEditor.getValue " + editor.getValue());
-      if (editor != null) {
-        return editor.getValue();
-      } else {
-        return null;
-      }
+      return editor.getValue();
     },
+    setValue(value) {
+      loadJsonData(value);
+    },
+    setSchema(value, schema) {
+      loadJsonSchema(value, schema);
+    }
   };
 </script>
 
@@ -134,16 +168,16 @@
 
 <!-- We have only one div container for the editor -->
 <div id="container-{id}" class="code-editor" />
-<!-- And an invisible file reader -->
+<!-- And two invisible file reader components -->
 <FileReader
   accept=".json"
   bind:fileReader={fileReaderData}
-  on:load={loadJsonData}
+  on:load={onLoadJsonData}
 />
 <FileReader
   accept=".json"
   bind:fileReader={fileReaderSchema}
-  on:load={loadJsonSchema}
+  on:load={onLoadJsonSchema}
 />
 
 <!-- CSS ------------------------------------------------------------------------- -->

@@ -4,8 +4,11 @@
   import HtmlErrorMessages from "./editor/HtmlErrorMessages.svelte";
   import HtmlPreview from "./editor/HtmlPreview.svelte";
   import JsonEditor from "./editor/JsonEditor.svelte";
+  import Navbar from "./layout/Navbar.svelte";
   import EditorAccordion from "./layout/EditorAccordion.svelte";
   import EditorAccordionItem from "./layout/EditorAccordionItem.svelte";
+
+  import { onMount } from 'svelte';
 
   export let processUrl = 'http://localhost:8080/api/json-to-html';
 
@@ -15,24 +18,20 @@
   let htmlPreview;
   let htmlErrorMessages;
 
-  const process = function(e) {
+  const process = function(customEvent) {
 
     const jsonContent = jsonEditor.getValue();
     const templateContent = htmlEditor.getValue();
     const cssContent = cssEditor.getValue();
-    console.log('process ' + processUrl + ' ' + e.detail.name + ' ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
-    
+
     const formData = new FormData();
-    console.log('1');
     formData.append('data', new Blob([jsonContent], { type: 'application/json;charset=UTF-8' }), 'data.json');
-    console.log('1');
     formData.append('template', new Blob([templateContent], { type: 'text/html;charset=UTF-8'}), 'template.html');
-    console.log('1');
     if (cssContent.length > 0) {
       formData.append('css', new Blob([cssContent], { type: 'text/css;charset=UTF-8'}), 'template.css');
     }
 
-    console.log('upload ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
+    // console.log('upload ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
 
     let req = new XMLHttpRequest();
     req.open('POST', processUrl);
@@ -42,12 +41,11 @@
         if (req.status == 200) {
           showResponse({htmlContent: req.responseText});
         } else {
-            alert('Error: ' + req.statusText);
-            showResponse({
-              errorMessages: 'Status Code: ' + req.statusCode
-                + '\r\nStatus Text: ' + req.statusText,
-              htmlContent: req.responseText
-            });
+          showResponse({
+            errorMessages: 'Status Code: ' + req.status
+              + '\r\nStatus Text: ' + req.statusText,
+            htmlContent: req.responseText
+          });
         }
     }
 
@@ -63,37 +61,70 @@
     }
   };
 
+  const loadFolder = function(customEvent) {
+
+    if (customEvent == null || customEvent.detail == null) {
+      return;
+    }
+    const fileContents = customEvent.detail;
+    if (fileContents.jsonSchema) {
+      jsonEditor.setSchema(fileContents.jsonSchema);
+    }
+    if (fileContents.jsonData) {
+      jsonEditor.setValue(fileContents.jsonData);
+    }
+    if (fileContents.html) {
+      htmlEditor.setValue(fileContents.html);
+    }
+    if (fileContents.css) {
+      cssEditor.setValue(fileContents.css);
+    }
+  };
+
+  const saveAll = function saveAll() {
+
+  };
+
+  //-- Lifecycle functions -----------------------------------------------------------
+
+  onMount(async () => {
+		process();
+	});
+
 </script>
 
 <!-- HTML ------------------------------------------------------------------------ -->
 
 <main>
-  <div class="container full-width-and-height">
-    <div class="row full-width-and-height">
-      <div class="col-6 no-margin">
-        <EditorAccordion id="editorsAccordion">
-          <EditorAccordionItem title="JSON Editor" isOpen="false">
-            <JsonEditor id="jsonEditor" bind:jsonEditor={jsonEditor} on:process={process} />
+  <div class="columns">
+    <div class="column">
+      <Navbar title="Thymeleaf Editor/Preview"
+        on:loadFolder={loadFolder}
+        on:saveAll={saveAll}
+        on:process={process}
+      ></Navbar>
+      <EditorAccordion id="editorsAccordion">
+        <EditorAccordionItem title="JSON Editor" isActive={true}>
+          <JsonEditor id="jsonEditor" bind:jsonEditor={jsonEditor} on:process={process} />
+        </EditorAccordionItem>
+        <EditorAccordionItem title="HTML Template Editor" isActive={true}>
+          <HtmlEditor id="htmlEditor" bind:htmlEditor={htmlEditor} on:process={process} />
+        </EditorAccordionItem>
+        <EditorAccordionItem title="CSS Editor" isActive={true}>
+          <CssEditor id="cssEditor" bind:cssEditor={cssEditor} on:process={process} />
+        </EditorAccordionItem>
+      </EditorAccordion>
+    </div>
+    <div class="column">
+        <EditorAccordion id="previewAccordion">
+          <EditorAccordionItem title="HTML Preview" isActive={true}>
+            <HtmlPreview id="htmlPreview" bind:htmlPreview={htmlPreview} />
           </EditorAccordionItem>
-          <EditorAccordionItem title="HTML Template Editor">
-            <HtmlEditor id="htmlEditor" bind:htmlEditor={htmlEditor} on:process={process} />
-          </EditorAccordionItem>
-          <EditorAccordionItem title="CSS Editor" isOpen="false">
-            <CssEditor id="cssEditor" bind:cssEditor={cssEditor} on:process={process} />
+          <EditorAccordionItem title="Error Messages" isActive={true}>
+            <HtmlErrorMessages id="htmlErrorMessages" bind:htmlErrorMessages={htmlErrorMessages} />
           </EditorAccordionItem>
         </EditorAccordion>
       </div>
-      <div class="col-6 no-margin">
-          <EditorAccordion id="previewAccordion">
-            <EditorAccordionItem title="HTML Preview">
-              <HtmlPreview id="htmlPreview" bind:htmlPreview={htmlPreview} />
-            </EditorAccordionItem>
-            <EditorAccordionItem title="Error Messages" isOpen="false">
-              <HtmlErrorMessages id="htmlErrorMessages" bind:htmlErrorMessages={htmlErrorMessages} />
-            </EditorAccordionItem>
-          </EditorAccordion>
-        </div>
-    </div>
   </div>
 </main>
 

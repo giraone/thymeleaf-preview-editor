@@ -26,7 +26,8 @@
 <style>
 .preview {
   width: 100%;
-  height: 100vh;
+  min-height: 200px;
+  height: 70vh;
 
   background-color: white;
   color: black;
@@ -34,6 +35,9 @@
 
   line-height: 1.15; 
   -webkit-text-size-adjust: 100%;
-  margin: 0;
+  margin-top: 0px;
+  margin-bottom: -4px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 </style>

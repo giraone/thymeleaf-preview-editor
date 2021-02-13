@@ -1,12 +1,13 @@
 {
   "$id": "https://example.com/person.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Person",
-  "type": "array",
+  "title": "Group of persons",
+  "type": "object",
+  "required": [ "groupName", "list"],
   "properties": {
     "groupName": {
       "type": "string",
-      "description": "Name of the group of persons"
+      "description": "Name of person group"
     },
     "list": {
       "type": "array",
@@ -15,23 +16,31 @@
   },
   "definitions": {
     "person": {
-      "firstName": {
-        "type": "string",
-        "description": "The person's first name."
-      },
-      "lastName": {
-        "type": "string",
-        "description": "The person's last name."
-      },
-      "gender": {
-        "description": "The person's gender",
-        "type": "string",
-        "enum": ["FEMALE", "MALE", "DIVERS", "UNKNOWN"]
-      },
-      "dateOfBirth": {
-        "description": "Date of birth.",
-        "type": "string",
-        "format": "date"
+      "type": "object",
+      "required": [ "firstName", "lastName", "gender", "dateOfBirth"],
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "description": "The person's first name."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The person's last name."
+        },
+        "gender": {
+          "description": "The person's gender",
+          "type": "string",
+          "enum": ["FEMALE", "MALE", "DIVERS", "UNKNOWN"]
+        },
+        "dateOfBirth": {
+          "description": "Date of birth.",
+          "type": "string",
+          "format": "date"
+        },
+        "salary": {
+          "description": "Monthly salary",
+          "type": "number"
+        }
       }
     }
   }

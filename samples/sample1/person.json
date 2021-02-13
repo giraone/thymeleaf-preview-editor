@@ -1,5 +1,23 @@
 {
- "lastName": "Smith",
- "firstName": "Joe",
- "gender": "MALE"
+	"groupName": "Employees",
+	"list": [
+		{
+			"lastName": "Smith",
+			"firstName": "Joe",
+			"gender": "MALE",
+      "dateOfBirth": "1998-02-15"
+		},
+		{
+			"lastName": "Smith",
+			"firstName": "Jane",
+			"gender": "FEMALE",
+      "dateOfBirth": "1979-12-31"
+		},
+    {
+			"lastName": "Doe",
+			"firstName": "Jane",
+			"gender": "FEMALE",
+      "dateOfBirth": "1999-01-01"
+		}
+	]
 }
