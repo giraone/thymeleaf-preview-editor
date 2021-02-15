@@ -6,6 +6,11 @@
 
   // The id of the container (div or h)
   export let id = Math.floor(Math.random() * 1000000);
+  // The default JSON content
+  export let defaultContent = '{}';
+  // The default JSON schema content
+  export let defaultJSONSchemaContent = '{}';
+
   // The monaco editor object
   let editor;
   // The FileReader-Component objects (JSON data, JSON schema)
@@ -13,9 +18,8 @@
   let fileReaderSchema;
 
   function initMonaco() {
-    // console.log("Configure JSON language support with schemas for Monaco");
     // configure the JSON language support with schemas and schema associations
-    const jsonSchemaUriString = "file://content/sample1/json-schema.json";
+    const jsonSchemaUriString = "file://content/default-json-schema.json";
     const modelUri = monaco.Uri.parse(jsonSchemaUriString); // a made up unique URI for our model
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
@@ -23,35 +27,21 @@
         {
           uri: jsonSchemaUriString, // id of the first schema
           fileMatch: [modelUri.toString()], // associate with our model
-          schema: {
-            type: "object",
-            properties: {
-              name: {
-                type: "string",
-                required: true,
-                description: "The user's last name.",
-              }
-            },
-          },
-        },
-      ],
+          schema: JSON.parse(defaultJSONSchemaContent)
+        }
+      ]
     });
 
-    // console.log("Creating new monaco JSON editor object");
-    const jsonLines = [
-      "{",
-      '\t"name": "User of Thymeleaf Editor"',
-      "}",
-    ].join("\n");
-    const model = monaco.editor.createModel(jsonLines, "json", modelUri);
+    const model = monaco.editor.createModel(defaultContent, "json", modelUri);
     // The monaco editor object
     editor = monaco.editor.create(document.getElementById("container-" + id), {
       language: "json",
       theme: "vs-dark",
       lineNumbers: "on",
+      automaticLayout: true, // built-in auto resize to parent container 
       scrollBeyondLastLine: false,
       readOnly: false,
-      model: model,
+      model: model
     });
 
     editor.addAction({
@@ -79,11 +69,19 @@
     });
 
     editor.addAction({
+      id: "saveFile",
+      label: "Save JSON file ...",
+      contextMenuGroupId: "navigation",
+      contextMenuOrder: 1.2,
+      run: saveJsonData
+    });
+
+    editor.addAction({
       id: "process",
       label: "Process",
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.F12],
       contextMenuGroupId: "navigation",
-      contextMenuOrder: 1.2,
+      contextMenuOrder: 1.3,
       run: function (ed) {
         dispatch("process", { from: ed, name: "json", content: ed.getValue() });
         return null;
@@ -98,6 +96,10 @@
       editor.dispose();
       editor = null;
     }
+  }
+
+  function saveJsonData() {
+    saveFile(editor.getValue(), 'application/json', 'file.json');
   }
 
   function loadJsonData(data) {
@@ -184,7 +186,7 @@
 <style>
   div.code-editor {
     width: 100%;
-    min-height: 200px;
+    height: 31vh;
     border: 1px solid grey;
   }
 </style>

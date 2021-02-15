@@ -29,6 +29,7 @@
       language: "html",
       theme: "vs-dark",
       lineNumbers: "on",
+      automaticLayout: true, // built-in auto resize to parent container 
       scrollBeyondLastLine: false,
       readOnly: false
     });
@@ -46,11 +47,19 @@
     });
 
     editor.addAction({
+      id: "saveFile",
+      label: "Save HTML/Thymeleaf template file ...",
+      contextMenuGroupId: "navigation",
+      contextMenuOrder: 1.1,
+      run: saveHtmlData
+    });
+
+    editor.addAction({
       id: "process",
       label: "Process",
       keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyCode.F12 ],
       contextMenuGroupId: "navigation",
-      contextMenuOrder: 1.1,
+      contextMenuOrder: 1.2,
       run: function (ed) {
         dispatch("process", { from: ed, name: "html", content: ed.getValue() });
         return null;
@@ -65,6 +74,10 @@
       editor.dispose();
       editor = null;
     }
+  }
+
+  function saveHtmlData() {
+    saveFile(editor.getValue(), 'text/html', 'file.html');
   }
 
   function loadHtmlData(customEvent) {
@@ -111,7 +124,7 @@
 <style>
   div.code-editor {
     width: 100%;
-    min-height: 300px;
+    height: 31vh;
     border: 1px solid grey;
   }
 </style>

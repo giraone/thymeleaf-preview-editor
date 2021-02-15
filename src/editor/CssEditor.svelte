@@ -18,6 +18,7 @@
       language: "css",
       theme: "vs-dark",
       lineNumbers: "on",
+      automaticLayout: true, // built-in auto resize to parent container 
       scrollBeyondLastLine: false,
       readOnly: false
     });
@@ -35,11 +36,19 @@
     });
 
     editor.addAction({
+      id: "saveFile",
+      label: "Save CSS file ...",
+      contextMenuGroupId: "navigation",
+      contextMenuOrder: 1.01,
+      run: saveCssData
+    });
+
+    editor.addAction({
       id: "process",
       label: "Process",
       keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyCode.F12 ],
       contextMenuGroupId: "navigation",
-      contextMenuOrder: 1.1,
+      contextMenuOrder: 1.02,
       run: function (ed) {
         dispatch("process", { from: ed, name: "css", content: ed.getValue() });
         return null;
@@ -54,6 +63,10 @@
       editor.dispose();
       editor = null;
     }
+  }
+
+  function saveCssData() {
+    saveFile(editor.getValue(), 'text/css', 'file.css');
   }
 
   function loadCssData(customEvent) {
@@ -99,7 +112,7 @@
 <style>
   div.code-editor {
     width: 100%;
-    min-height: 200px;
+    height: 31vh;
     border: 1px solid grey;
   }
 </style>
