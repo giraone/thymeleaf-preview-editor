@@ -3,6 +3,7 @@
   import HtmlEditor from "./editor/HtmlEditor.svelte";
   import HtmlErrorMessages from "./editor/HtmlErrorMessages.svelte";
   import HtmlPreview from "./editor/HtmlPreview.svelte";
+  import JsonSchemaEditor from "./editor/JsonSchemaEditor.svelte";
   import JsonEditor from "./editor/JsonEditor.svelte";
   import Navbar from "./layout/Navbar.svelte";
   import EditorAccordion from "./layout/EditorAccordion.svelte";
@@ -12,15 +13,24 @@
 
   export let processUrl = 'http://localhost:8080/api/json-to-html';
 
-  let jsonEditor;
+  let jsonSchemaEditor;
+  let jsonDataEditor;
   let htmlEditor;
   let cssEditor;
   let htmlPreview;
   let htmlErrorMessages;
 
+  const defaultJsonDataContent = [
+    "{",
+    '\t"name": "User of Thymeleaf Editor"',
+    "}",
+  ].join("\n");
+
+  const defaultJsonSchemaContent = "{}";
+
   const process = function(customEvent) {
 
-    const jsonContent = jsonEditor.getValue();
+    const jsonContent = jsonDataEditor.getValue();
     const templateContent = htmlEditor.getValue();
     const cssContent = cssEditor.getValue();
 
@@ -68,10 +78,11 @@
     }
     const fileContents = customEvent.detail;
     if (fileContents.jsonSchema) {
-      jsonEditor.setSchema(fileContents.jsonSchema);
+      jsonSchemaEditor.setValue(fileContents.jsonSchema);
+      jsonDataEditor.setSchema(fileContents.jsonSchema);
     }
     if (fileContents.jsonData) {
-      jsonEditor.setValue(fileContents.jsonData);
+      jsonDataEditor.setValue(fileContents.jsonData);
     }
     if (fileContents.html) {
       htmlEditor.setValue(fileContents.html);
@@ -104,8 +115,13 @@
         on:process={process}
       ></Navbar>
       <EditorAccordion id="editorsAccordion">
+        <EditorAccordionItem title="JSON Schema Editor" isActive={true}>
+          <JsonSchemaEditor id="jsonSchemaEditor" bind:jsonEditor={jsonSchemaEditor} on:process={process}
+           defaultContent={defaultJsonSchemaContent} />
+        </EditorAccordionItem>
         <EditorAccordionItem title="JSON Editor" isActive={true}>
-          <JsonEditor id="jsonEditor" bind:jsonEditor={jsonEditor} on:process={process} />
+          <JsonEditor id="jsonDataEditor" bind:jsonEditor={jsonDataEditor} on:process={process}
+          defaultContent={defaultJsonDataContent} />
         </EditorAccordionItem>
         <EditorAccordionItem title="HTML Template Editor" isActive={true}>
           <HtmlEditor id="htmlEditor" bind:htmlEditor={htmlEditor} on:process={process} />
