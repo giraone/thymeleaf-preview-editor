@@ -9,7 +9,7 @@
 
 <!-- HTML ------------------------------------------------------------------------ -->
 
-<div class="no-margin" id="accordion-{id}">
+<div class="accordion no-margin" id="accordion-{id}">
  <slot>
    <em>no accordion items were provided for "accordion-{id}"</em>
  </slot>
@@ -18,4 +18,9 @@
 <!-- CSS ------------------------------------------------------------------------- -->
 
 <style>
+  div.accordion {
+    width: 100%;
+    height: 94vh;
+    overflow: hidden;
+  }
 </style>

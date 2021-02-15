@@ -10,7 +10,7 @@
 
   function toggle() {
 
-    console.log('toggle ' + isActive);
+    // console.log('toggle ' + isActive);
     if (!accordionItem) {
       console.warn('accordionItem not set!');
       return;
@@ -62,4 +62,7 @@
 <!-- CSS ------------------------------------------------------------------------- -->
 
 <style>
+  div.card {
+    width: 100%;
+  }
 </style>
