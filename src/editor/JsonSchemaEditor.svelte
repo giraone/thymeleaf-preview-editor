@@ -14,7 +14,7 @@
   // The FileReader-Component objects (JSON data, JSON schema)
   let fileReaderData;
 
-  // From https://github.com/json-schema-org/json-schema-spec (15.02.2021)
+  // From https://json-schema.org/draft-07/schema (15.02.2021)
   const jsonSchemaSchema = `
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
