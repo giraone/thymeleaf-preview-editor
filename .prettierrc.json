@@ -1,0 +1,9 @@
+{
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "svelteStrictMode": true,
+  "htmlWhitespaceSensitivity": "strict",
+  "printWidth": 300
+}
