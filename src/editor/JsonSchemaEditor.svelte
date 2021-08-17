@@ -1,8 +1,6 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import { onMount } from "svelte";
-  import FileReader from "../util/FileReader.svelte";
-  const dispatch = createEventDispatcher();
+  import { onMount } from 'svelte';
+  import FileReader from '../util/FileReader.svelte';
 
   // The id of the container (div or h)
   export let id = Math.floor(Math.random() * 1000000);
@@ -262,10 +260,10 @@
   "default": true
 }
   `;
-  
+
   function initMonaco() {
     // configure the JSON language support with schemas and schema associations
-    const jsonSchemaUriString = "http://json-schema.org/draft-07/schema#";
+    const jsonSchemaUriString = 'http://json-schema.org/draft-07/schema#';
     const modelUri = monaco.Uri.parse(jsonSchemaUriString); // URI for JSON Schema
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
@@ -274,39 +272,38 @@
           uri: jsonSchemaUriString, // id of the first schema
           fileMatch: [modelUri.toString()], // associate with our model
           schema: jsonSchemaSchema
-
         }
       ]
     });
 
-    const model = monaco.editor.createModel(defaultContent, "json", modelUri);
+    const model = monaco.editor.createModel(defaultContent, 'json', modelUri);
     // The monaco editor object
-    editor = monaco.editor.create(document.getElementById("container-" + id), {
-      language: "json",
-      theme: "vs-dark",
-      lineNumbers: "on",
-      automaticLayout: true, // built-in auto resize to parent container 
+    editor = monaco.editor.create(document.getElementById('container-' + id), {
+      language: 'json',
+      theme: 'vs-dark',
+      lineNumbers: 'on',
+      automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
       readOnly: false,
       model: model
     });
 
     editor.addAction({
-      id: "loadFile",
-      label: "Load JSON Schema file ...",
+      id: 'loadFile',
+      label: 'Load JSON Schema file ...',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.O],
-      contextMenuGroupId: "navigation",
+      contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.0,
       run: function () {
         fileReaderData.open();
         return null;
-      },
+      }
     });
 
     editor.addAction({
-      id: "saveFile",
-      label: "Save JSON Schema file ...",
-      contextMenuGroupId: "navigation",
+      id: 'saveFile',
+      label: 'Save JSON Schema file ...',
+      contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.2,
       run: saveJsonData
     });
@@ -325,12 +322,17 @@
     saveFile(editor.getValue(), 'application/json', 'file-schema.json');
   }
 
-  function loadJsonData(data) {
-    editor.setValue(data);
+  function loadJsonData(jsonData) {
+    editor.setValue(jsonData);
   }
 
   function onLoadJsonData(customEvent) {
     loadJsonData(customEvent.detail);
+  }
+
+  function loadJsonSchema(jsonData, jsonSchema) {
+    editor.setSchema(jsonSchema);
+    editor.setValue(jsonData);
   }
 
   //-- Lifecycle functions -----------------------------------------------------------
@@ -358,13 +360,9 @@
 <!-- HTML ------------------------------------------------------------------------ -->
 
 <!-- We have only one div container for the editor -->
-<div id="container-{id}" class="code-editor" />
+<div id="container-{id}" class="code-editor"></div>
 <!-- And two invisible file reader components -->
-<FileReader
-  accept=".json"
-  bind:fileReader={fileReaderData}
-  on:load={onLoadJsonData}
-/>
+<FileReader accept=".json" bind:fileReader="{fileReaderData}" on:load="{onLoadJsonData}" />
 
 <!-- CSS ------------------------------------------------------------------------- -->
 <style>

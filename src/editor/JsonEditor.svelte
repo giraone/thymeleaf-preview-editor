@@ -1,7 +1,7 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-  import { onMount } from "svelte";
-  import FileReader from "../util/FileReader.svelte";
+  import { createEventDispatcher } from 'svelte';
+  import { onMount } from 'svelte';
+  import FileReader from '../util/FileReader.svelte';
   const dispatch = createEventDispatcher();
 
   // The id of the container (div or h)
@@ -19,7 +19,7 @@
 
   function initMonaco() {
     // configure the JSON language support with schemas and schema associations
-    const jsonSchemaUriString = "file://content/default-json-schema.json";
+    const jsonSchemaUriString = 'file://content/default-json-schema.json';
     const modelUri = monaco.Uri.parse(jsonSchemaUriString); // a made up unique URI for our model
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
@@ -32,60 +32,60 @@
       ]
     });
 
-    const model = monaco.editor.createModel(defaultContent, "json", modelUri);
+    const model = monaco.editor.createModel(defaultContent, 'json', modelUri);
     // The monaco editor object
-    editor = monaco.editor.create(document.getElementById("container-" + id), {
-      language: "json",
-      theme: "vs-dark",
-      lineNumbers: "on",
-      automaticLayout: true, // built-in auto resize to parent container 
+    editor = monaco.editor.create(document.getElementById('container-' + id), {
+      language: 'json',
+      theme: 'vs-dark',
+      lineNumbers: 'on',
+      automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
       readOnly: false,
       model: model
     });
 
     editor.addAction({
-      id: "loadFile",
-      label: "Load JSON file ...",
+      id: 'loadFile',
+      label: 'Load JSON file ...',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.O],
-      contextMenuGroupId: "navigation",
+      contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.0,
       run: function () {
         fileReaderData.open();
         return null;
-      },
+      }
     });
 
     editor.addAction({
-      id: "loadSchema",
-      label: "Load JSON schema file ...",
+      id: 'loadSchema',
+      label: 'Load JSON schema file ...',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Q],
-      contextMenuGroupId: "navigation",
+      contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.1,
       run: function () {
         fileReaderSchema.open();
         return null;
-      },
+      }
     });
 
     editor.addAction({
-      id: "saveFile",
-      label: "Save JSON file ...",
-      contextMenuGroupId: "navigation",
+      id: 'saveFile',
+      label: 'Save JSON file ...',
+      contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.2,
       run: saveJsonData
     });
 
     editor.addAction({
-      id: "process",
-      label: "Process",
+      id: 'process',
+      label: 'Process',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.F12],
-      contextMenuGroupId: "navigation",
+      contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.3,
       run: function (ed) {
-        dispatch("process", { from: ed, name: "json", content: ed.getValue() });
+        dispatch('process', { from: ed, name: 'json', content: ed.getValue() });
         return null;
-      },
+      }
     });
   }
 
@@ -107,7 +107,6 @@
   }
 
   function loadJsonSchema(schema) {
-
     /*
     if (editor.getModel() != null) {
       editor.setModel(null); // Detach old model
@@ -115,9 +114,9 @@
     }
     */
     const jsonSchema = JSON.parse(schema);
-    const schemaUri = jsonSchema['$id'];
+    let schemaUri = jsonSchema['$id'];
     if (schemaUri == null) {
-      schemaUri = "file://content/schema-" + Math.floor(Math.random() * 1000000) +".json";
+      schemaUri = 'file://content/schema-' + Math.floor(Math.random() * 1000000) + '.json';
     }
     const modelUri = monaco.Uri.parse(schemaUri);
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
@@ -131,7 +130,7 @@
       ]
     });
 
-    const model = monaco.editor.createModel(schema, "json", modelUri);
+    const model = monaco.editor.createModel(schema, 'json', modelUri);
     editor.setModel(model);
   }
 
@@ -169,18 +168,10 @@
 <!-- HTML ------------------------------------------------------------------------ -->
 
 <!-- We have only one div container for the editor -->
-<div id="container-{id}" class="code-editor" />
+<div id="container-{id}" class="code-editor"></div>
 <!-- And two invisible file reader components -->
-<FileReader
-  accept=".json"
-  bind:fileReader={fileReaderData}
-  on:load={onLoadJsonData}
-/>
-<FileReader
-  accept=".json"
-  bind:fileReader={fileReaderSchema}
-  on:load={onLoadJsonSchema}
-/>
+<FileReader accept=".json" bind:fileReader="{fileReaderData}" on:load="{onLoadJsonData}" />
+<FileReader accept=".json" bind:fileReader="{fileReaderSchema}" on:load="{onLoadJsonSchema}" />
 
 <!-- CSS ------------------------------------------------------------------------- -->
 <style>
