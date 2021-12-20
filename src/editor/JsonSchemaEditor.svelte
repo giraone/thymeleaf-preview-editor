@@ -365,10 +365,6 @@
 <FileReader accept=".json" bind:fileReader="{fileReaderData}" on:load="{onLoadJsonData}" />
 
 <!-- CSS ------------------------------------------------------------------------- -->
+
 <style>
-  div.code-editor {
-    width: 100%;
-    height: 31vh;
-    border: 1px solid grey;
-  }
 </style>

@@ -1,0 +1,108 @@
+/*- HEADER, MAIN -*/
+
+header {
+  height: var(--header-height);
+  width: 100vw;
+  background: var(--header-background);
+  color: var(--header-color);
+  border-bottom-style: solid;
+  border-bottom-color: var(--resizer-color);
+  border-bottom-width: var(--border-size);
+}
+
+span.header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  /* must be top aligned because of the floating buttons */
+  vertical-align: top;
+}
+
+main {
+  width: 100vw;
+  height: calc(100vh - var(--header-height));
+  overflow: hidden;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+/*- RESIZABLE COLUMNS and ROWS -*/
+div.column1 {
+  float: left;
+  width: calc(50vw - (var(--border-size) / 2));
+  height: calc(100vh - var(--header-height));
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+div.column2 {
+  float: left;
+  left: calc(50vw + var(--border-size));
+  width: calc(50vw - (var(--border-size) / 2));
+  height: calc(100vh - var(--header-height));
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+div.verticalBar {
+  float: left;
+  left: 50vw;
+  width: var(--border-size);
+  height: calc(100vh - var(--header-height));
+  background-color: var(--resizer-color);
+  cursor: ew-resize;
+}
+div.verticalBar:hover {
+  background-color: firebrick;
+}
+div.verticalBar:active {
+  background-color: orangered;
+}
+div.horizontalBar {
+  top: 50vh;
+  height: var(--border-size);
+  background-color: var(--resizer-color);
+  cursor: ns-resize;
+}
+div.horizontalBar:hover {
+  background-color: firebrick;
+}
+div.horizontalBar:active {
+  background-color: orangered;
+}
+
+/*- CELLS IN DIFFERENT SIZE -*/
+
+div.card25-4 {
+  height: calc(25vh - (var(--header-height) / 4) - (var(--border-size) / 2));
+}
+div.card25-2 {
+  height: calc(25vh - (var(--header-height) / 2) - (var(--border-size) / 2));
+}
+div.card75-2 {
+  height: calc(75vh - (var(--header-height) / 2) - (var(--border-size) / 2));
+}
+
+/*- CONTENT WITHIN CELLS -*/
+
+.code-editor {
+  width:  calc(100% - var(--scrollbar-width));
+  height: calc(100% - var(--scrollbar-width));
+}
+
+.preview {
+  /* iframe behaves different - the scrollbar settings are defined by the content. */
+  width:  calc(100% - var(--scrollbar-width));
+  height: calc(100% - var(--scrollbar-width));
+}
+
+.error-messages {
+  width:  calc(50% - (var(--border-size) / 2)) - var(--scrollbar-width);
+  height: calc(100% - var(--scrollbar-width));
+
+  padding: 0.25rem;
+
+  overflow-x: auto;
+  overflow-y: scroll;
+  scrollbar-width: var(--scrollbar-width);
+  scrollbar-color: var(----scrollbar-color)  var(--default-background);
+}

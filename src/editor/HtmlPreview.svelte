@@ -24,20 +24,4 @@
 <!-- CSS ------------------------------------------------------------------------- -->
 
 <style>
-.preview {
-  width: 100%;
-  min-height: 200px;
-  height: 70vh;
-
-  background-color: white;
-  color: black;
-  border: 1px solid grey;
-
-  line-height: 1.15; 
-  -webkit-text-size-adjust: 100%;
-  margin-top: 0px;
-  margin-bottom: -4px;
-  margin-left: 0px;
-  margin-right: 0px;
-}
 </style>

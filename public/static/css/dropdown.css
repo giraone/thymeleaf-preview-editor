@@ -1,0 +1,71 @@
+header nav#buttons {
+  color: var(--menu-color);
+  display: inline-block;
+  font-size: 1.1rem;
+}
+
+header nav#buttons ul {
+  margin: 0;
+  padding: 0;
+  transition: all 300ms;
+  display: inline-block;
+}
+
+header nav#buttons ul li {
+  float: left;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transition: all 300ms;
+}
+
+header nav#buttons ul li a {
+  /* inline-block, to set min-width and height for a uniform width and height */
+  display: inline-block;
+  min-width: 10rem;
+  height: calc(var(--header-height) - 4px);
+  padding: 0;
+  /* small horizontal 2 pixel gap (margin-left) between buttons (rems have floating point errors here!) */
+  margin: 2px 2px 2px 0;
+  color: var(--menu-color);
+  background: var(--menu-background);
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms;
+}
+
+header nav#buttons ul li:hover>a {
+  color: var(--menu-color-hover);
+  background: var(--menu-background-hover);
+}
+
+
+
+header nav#buttons ul li ul {
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 0;
+  transition: 300ms all;
+}
+
+header nav#buttons ul li ul li {
+  border-bottom: 1px solid #8c1e31;
+}
+
+header nav#buttons ul li:hover>ul {
+  max-height: 700px;
+}
+
+header nav #menu {
+  float: left;
+  padding: 2rem 5% 2rem 5%;
+  width: 90%;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: all 500ms;
+  cursor: pointer;
+}

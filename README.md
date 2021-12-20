@@ -56,3 +56,9 @@ If you're building a single-page app (SPA) with multiple routes, sirv needs to b
 
 - `npm install --save-dev prettier-plugin-svelte`
 - `npm install --save-dev eslint eslint-plugin-svelte3 babel-eslint`
+
+## Release Notes
+
+- 1.1.0 (2021-12-20)
+  - Bulma and Accordion removed
+  - New resizable components

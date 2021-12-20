@@ -1,24 +1,35 @@
+:root {
+  --default-background: #1E1E1E; /* same as monaco vs-dark scheme */
+  --default-color: #D1D1D1; /* same as monaco vs-dark scheme */
+  --scrollbar-color: #424242; /* same as monaco vs-dark scheme */
+  --header-background: #2A3038;
+  --header-color: #B5CEA8;
+  --menu-background: #4d545e;
+  --menu-background-hover: #627080;
+  --menu-color: #B5CEA8;
+  --menu-color-hover: #D1D1D1;
+  --resizer-color: lightsteelblue;
+  --header-height: 2rem;
+  --border-size: 0.25rem;
+  --scrollbar-width: 10px;
+}
+
 body {
-  font-size: 11px;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Segoe UI","Fira Sans","Droid Sans","Helvetica",Arial,sans-serif;
+  color: var(--default-color);
+  background-color: var(--default-background);
+}
+
+blockquote, body, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
-h1, h2, h3, h4 {
-  margin-left: 0.5em;
+iframe {
+  border-style: none;
+  border-width: 0;
+  margin: 0;
+  padding: 0;
 }
-
-.no-margin {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.full-width-and-height {
-  width: 100%;
-  max-width: 100% !important;
-  height: 100vh;
-  max-height: 100vh !important;
-}
-
-

@@ -88,28 +88,19 @@
 
 <!-- HTML ------------------------------------------------------------------------ -->
 
-<nav class="navbar">
-  <div class="navbar-menu">
-    <div class="navbar-start">
-      <a href="#/" class="navbar-item">{title}</a>
-      <div class="navbar-item has-dropdown is-hoverable" on:mouseover="{() => (menuOpen = true)}" on:mouseout="{() => (menuOpen = false)}" class:is-active="{menuOpen}">
-        <a href="#/" class="navbar-link">File</a>
-        <div class="navbar-dropdown">
-          <a href="#/" class="navbar-item" on:click="{openLoadFolderDialog}">Load folder ...</a>
-          <a href="#/" class="navbar-item" on:click="{saveAll}">Save all</a>
-          <hr class="navbar-divider" />
-          <a href="#/" class="navbar-item" on:click="{process}">Process</a>
-          <hr class="navbar-divider" />
-          <a href="#/" class="navbar-item" on:click="{() => (menuOpen = false)}">Close</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<span class="header">{title}</span>
+<nav id="buttons">
+  <ul>
+    <li><a href="#/" on:click="{openLoadFolderDialog}">Load folder...</a></li>
+    <li><a href="#/" on:click="{saveAll}">Save all...</a></li>
+    <li><a href="#/" on:click="{process}">Process</a></li>
+  </ul>
 </nav>
 
 <!-- An invisible file listing component -->
 <FileListing bind:fileListing on:load="{loadFolder}" />
 
 <!-- CSS ------------------------------------------------------------------------- -->
+
 <style>
 </style>

@@ -11,10 +11,10 @@
   // The FileReader-Component object
   let fileReader;
 
-
   function initMonaco() {
     editor = monaco.editor.create(document.getElementById("container-" + id), {
-      value: [".strong {", "\tcolor: red;", "}"].join("\n"),
+      // value: ["body {", " width: 100vw;", "}", ".strong {", " color: red;", "}"].join("\n"),
+      value: [".strong {", " color: red;", "}"].join("\n"),
       language: "css",
       theme: "vs-dark",
       lineNumbers: "on",
@@ -110,9 +110,4 @@
 <!-- CSS ------------------------------------------------------------------------- -->
 
 <style>
-  div.code-editor {
-    width: 100%;
-    height: 31vh;
-    border: 1px solid grey;
-  }
 </style>
