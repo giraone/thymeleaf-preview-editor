@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset='utf-8'>
-	<meta name='viewport' content='width=device-width,initial-scale=1'>
-	<title>Person List</title>
-	<style></style>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Person List</title>
+<style></style>
 </head>
 
 <body>
   <h1>
-      <span th:text="${groupName}">List</span>
-      <span> (</span>
-      <span th:text="${#dates.format(new java.util.Date(), 'dd.MM.yyyy')}">13.12.2011</span>
-      <span>)</span>
+    <span th:text="${groupName}">List</span>
+    <span> (</span>
+    <span th:text="${#dates.format(new java.util.Date(), 'dd.MM.yyyy')}">13.12.2011</span>
+    <span>)</span>
   </h1>
   <table class="table table-striped fixed">
     <thead>
@@ -32,6 +32,5 @@
       </tr>
     </tbody>
   </table>
-
 </body>
 </html>
