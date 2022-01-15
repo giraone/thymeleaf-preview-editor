@@ -1,28 +1,37 @@
 <script>
-  import CssEditor from './editor/CssEditor.svelte';
-  import HtmlEditor from './editor/HtmlEditor.svelte';
-  import HtmlErrorMessages from './editor/HtmlErrorMessages.svelte';
-  import HtmlPreview from './editor/HtmlPreview.svelte';
   import JsonSchemaEditor from './editor/JsonSchemaEditor.svelte';
   import JsonEditor from './editor/JsonEditor.svelte';
+  import HtmlEditor from './editor/HtmlEditor.svelte';
+  import CssEditor from './editor/CssEditor.svelte';
+ 
+  import HtmlErrorMessages from './preview/HtmlErrorMessages.svelte';
+  import HtmlPreview from './preview/HtmlPreview.svelte';
+  import PdfPreview from './preview/PdfPreview.svelte';
+
   import Navbar from './layout/Navbar.svelte';
 
   import { onMount } from 'svelte';
 
-  export let processUrl = 'http://localhost:8080/api/json-to-html';
+  export let processJsonToHtmlUrl = 'http://localhost:8080/api/json-to-html';
+  export let processJsonToPdfUrl = 'http://localhost:8080/api/json-to-pdf';
 
   let jsonSchemaEditor;
   let jsonDataEditor;
   let htmlEditor;
   let cssEditor;
-  let htmlPreview;
+
   let htmlErrorMessages;
+  let htmlPreview;
+  let pdfPreview;
+  
+  let showPdf = false;
 
   const defaultJsonDataContent = ['{', '\t"name": "User of Thymeleaf Editor"', '}'].join('\n');
 
   const defaultJsonSchemaContent = '{}';
 
   const process = function () {
+
     const jsonContent = jsonDataEditor.getValue();
     const templateContent = htmlEditor.getValue();
     const cssContent = cssEditor.getValue();
@@ -34,45 +43,79 @@
       formData.append('css', new Blob([cssContent], { type: 'text/css;charset=UTF-8' }), 'template.css');
     }
 
-    // console.log('upload ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
+    console.log('upload ' + showPdf + ' ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
 
-    const req = new XMLHttpRequest();
+    if (showPdf) {
+      previewPdf(formData);
+    } else {
+      previewHtml(formData);
+    }
+  };
+
+  const processToHtml = function () {
+    showPdf = false;
+    process();
+  };
+
+  const processToPdf = function () {
+    showPdf = true;
+    process();
+  };
+
+  const previewHtml = function (formData) {
     
-    req.open('POST', processUrl);
+    const req = new XMLHttpRequest();   
+    req.open('POST', processJsonToHtmlUrl);
     req.setRequestHeader('Accept', 'text/html');
 
     req.onload = function () {
       console.log('-- ' + req.readyState + ' ' + req.status);
       if (req.status === 200) {
-        showResponse({ htmlContent: req.responseText });
+        htmlPreview.showHtmlContent(req.responseText);
+        htmlErrorMessages.showErrorMessages(req.responseText);
       } else {
-        showResponse({
-          errorMessages: 'Status Code: ' + req.status + '\r\nStatus Text: ' + req.statusText,
-          htmlContent: req.responseText
-        });
+        let text = 'Status Code: ' + req.status + '\r\nStatus Text: ' + req.statusText;
+        if (req.responseText) {
+          text += '\r\n- - -\r\n' + req.responseText;
+        }
+        htmlErrorMessages.showErrorMessages(text);
       }
     };
     req.onerror = function () {
-      showResponse({ errorMessages: 'ERROR calling ' + processUrl});
+      htmlErrorMessages.showErrorMessages('ERROR calling ' + processJsonToHtmlUrl);
     };
 
     req.send(formData);
   };
 
-  function showResponse(dataSet) {
-    
-    if (dataSet.errorMessages) {
-      let text = dataSet.errorMessages;
-      if (dataSet.htmlContent) {
-        text += '\r\n- - -\r\n' + dataSet.htmlContent;
+  const previewPdf = function (formData) {
+   
+    const req = new XMLHttpRequest();
+    req.open('POST', processJsonToPdfUrl);
+    req.setRequestHeader('Accept', 'application/pdf');
+    req.responseType = "arraybuffer";
+
+    req.onload = function () {
+      console.log('-- ' + req.readyState + ' ' + req.status);
+      if (req.status === 200) {
+        htmlErrorMessages.showErrorMessages('');
+        var arrayBuffer = req.response; // Note: not req.responseText!
+        if (arrayBuffer) {
+          let dataUrl = URL.createObjectURL(new Blob([arrayBuffer], {
+            type: "application/pdf"
+          }));      
+          pdfPreview.showPdfFromUrl(dataUrl);
+        }
+      } else {
+        htmlErrorMessages.showErrorMessages('Status Code: ' + req.status + '\r\nStatus Text: ' + req.statusText);
       }
-      htmlErrorMessages.showErrorMessages(text);
-    }
-    if (dataSet.htmlContent) {
-      htmlPreview.showHtmlContent(dataSet.htmlContent);
-      htmlErrorMessages.showErrorMessages(dataSet.htmlContent);
-    }
-  }
+    };
+    req.onerror = function () {
+      htmlErrorMessages.showErrorMessages('ERROR calling ' + processJsonToPdflUrl);
+    };
+
+    req.send(formData);
+  };
 
   const loadFolder = function (customEvent) {
     if (customEvent == null || customEvent.detail == null) {
@@ -137,7 +180,8 @@
 <!-- HTML ------------------------------------------------------------------------ -->
 
 <header>
-  <Navbar title="Thymeleaf Editor/Preview" on:loadFolder="{loadFolder}" on:saveAll="{saveAll}" on:process="{process}" />
+  <Navbar title="Thymeleaf Editor/Preview" on:loadFolder="{loadFolder}"
+    on:saveAll="{saveAll}" on:processToHtml="{processToHtml}" on:processToPdf="{processToPdf}" />
 </header>
 <main>
   <div class="column1" id="col1">
@@ -160,7 +204,11 @@
   <div class="verticalBar" id="v1"></div>
   <div class="column2" id="col2">
     <div class="card75-2 previewColor" id="row21">
-      <HtmlPreview id="htmlPreview" bind:htmlPreview />
+      {#if showPdf}
+      <PdfPreview id="pdfPreview" bind:pdfPreview />
+      {:else}
+      <HtmlPreview id="htmlPreview" bind:htmlPreview />   
+      {/if}
     </div>
     <div class="horizontalBar" id="h21"></div>
     <div class="card25-2" id="row22">

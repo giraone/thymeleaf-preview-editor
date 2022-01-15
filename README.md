@@ -59,6 +59,8 @@ If you're building a single-page app (SPA) with multiple routes, sirv needs to b
 
 ## Release Notes
 
+- 1.2.0 (2022-1-15)
+  - First version with PDF preview
 - 1.1.0 (2021-12-20)
   - Bulma and Accordion removed
   - New resizable components

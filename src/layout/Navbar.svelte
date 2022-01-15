@@ -73,8 +73,12 @@
     dispatch('saveAll');
   }
 
-  function process() {
-    dispatch('process');
+  function processToHtml() {
+    dispatch('processToHtml');
+  }
+
+  function processToPdf() {
+    dispatch('processToPdf');
   }
 
   //-- Lifecycle functions -----------------------------------------------------------
@@ -93,7 +97,8 @@
   <ul>
     <li><a href="#/" on:click="{openLoadFolderDialog}">Load folder...</a></li>
     <li><a href="#/" on:click="{saveAll}">Save all...</a></li>
-    <li><a href="#/" on:click="{process}">Process</a></li>
+    <li><a href="#/" on:click="{processToHtml}">Process to HTML</a></li>
+    <li><a href="#/" on:click="{processToPdf}">Process to PDF</a></li>
   </ul>
 </nav>
 
