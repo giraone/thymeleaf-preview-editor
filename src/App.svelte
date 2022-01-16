@@ -20,6 +20,11 @@
   let htmlEditor;
   let cssEditor;
 
+  let jsonSchemaFile = 'file-schema.json';
+  let jsonDataFile = 'file.json';
+  let htmlFile = 'file.html';
+  let cssFile = 'file.css';
+
   let htmlErrorMessages;
   let htmlPreview;
   let pdfPreview;
@@ -43,7 +48,7 @@
       formData.append('css', new Blob([cssContent], { type: 'text/css;charset=UTF-8' }), 'template.css');
     }
 
-    console.log('upload ' + showPdf + ' ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
+    // console.log('load ' + jsonContent.length + ' ' + templateContent.length + ' ' + cssContent.length);
 
     if (showPdf) {
       previewPdf(formData);
@@ -125,23 +130,28 @@
     if (fileContents.jsonSchema) {
       jsonSchemaEditor.setValue(fileContents.jsonSchema);
       jsonDataEditor.setSchema(fileContents.jsonSchema);
+      jsonSchemaFile = fileContents.jsonSchemaFile;
     }
     if (fileContents.jsonData) {
       jsonDataEditor.setValue(fileContents.jsonData);
+      jsonDataFile = fileContents.jsonDataFile;
     }
     if (fileContents.html) {
       htmlEditor.setValue(fileContents.html);
+      htmlFile = fileContents.htmlFile;
     }
     if (fileContents.css) {
       cssEditor.setValue(fileContents.css);
+      cssFile = fileContents.cssFile;
     }
   };
 
   const saveAll = function() {
-    saveFile(htmlEditor.getValue(), 'text/html', 'file.html');
-    saveFile(jsonDataEditor.getValue(), 'application/json', 'file.json');
-    saveFile(cssEditor.getValue(), 'text/css', 'file.css');
-    saveFile(jsonSchemaEditor.getValue(), 'application/json', 'file-schema.json');
+
+    saveFile(htmlEditor.getValue(), 'text/html', htmlFile);
+    saveFile(jsonDataEditor.getValue(), 'application/json', jsonDataFile);
+    saveFile(cssEditor.getValue(), 'text/css', cssFile);
+    saveFile(jsonSchemaEditor.getValue(), 'application/json', jsonSchemaFile);
   };
 
   function initResizer() {
@@ -182,6 +192,11 @@
 <header>
   <Navbar title="Thymeleaf Editor/Preview" on:loadFolder="{loadFolder}"
     on:saveAll="{saveAll}" on:processToHtml="{processToHtml}" on:processToPdf="{processToPdf}" />
+    <span class="fileName">   Loaded files:</span>
+    <span class="fileName">JSON schema = {jsonSchemaFile},</span>
+    <span class="fileName">JSON data = {jsonDataFile},</span>
+    <span class="fileName">HTML = {htmlFile},</span>
+    <span class="fileName">CSS = {cssFile}</span>
 </header>
 <main>
   <div class="column1" id="col1">
@@ -224,5 +239,8 @@
 .previewColor {
   background-color: white;
   color: black;
+}
+span.fileName {
+  vertical-align: top;
 }
 </style>

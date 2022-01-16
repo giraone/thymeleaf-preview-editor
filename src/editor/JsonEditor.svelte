@@ -16,6 +16,8 @@
   // The FileReader-Component objects (JSON data, JSON schema)
   let fileReaderData;
   let fileReaderSchema;
+  // Hold the JSON Schema model
+  let jsonSchemaModel;
 
   function initMonaco() {
     // configure the JSON language support with schemas and schema associations
@@ -32,7 +34,7 @@
       ]
     });
 
-    const model = monaco.editor.createModel(defaultContent, 'json', modelUri);
+    jsonSchemaModel = monaco.editor.createModel(defaultContent, 'json', modelUri);
     // The monaco editor object
     editor = monaco.editor.create(document.getElementById('container-' + id), {
       language: 'json',
@@ -41,7 +43,7 @@
       automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
       readOnly: false,
-      model: model
+      model: jsonSchemaModel
     });
 
     editor.addAction({
@@ -107,12 +109,13 @@
   }
 
   function loadJsonSchema(schema) {
-    /*
-    if (editor.getModel() != null) {
+    
+    if (jsonSchemaModel != null && editor.getModel() != null) {
       editor.setModel(null); // Detach old model
+      jsonSchemaModel = null;
       return;
     }
-    */
+    
     const jsonSchema = JSON.parse(schema);
     let schemaUri = jsonSchema['$id'];
     if (schemaUri == null) {
@@ -130,8 +133,12 @@
       ]
     });
 
-    const model = monaco.editor.createModel(schema, 'json', modelUri);
-    editor.setModel(model);
+    if (jsonSchemaModel == null) {
+      jsonSchemaModel = monaco.editor.createModel(schema, 'json', modelUri);
+    } else {
+      jsonSchemaModel.uri = modelUri;
+    }
+    editor.setModel(jsonSchemaModel);
   }
 
   function onLoadJsonData(customEvent) {

@@ -23,8 +23,8 @@
     }
     const fileObjects = customEvent.detail;
 
-    let jsonData = null;
     let jsonSchema = null;
+    let jsonData = null;
     let html = null;
     let css = null;
 
@@ -46,8 +46,13 @@
     }
 
     const content = {
-      jsonData: await readFileAsync(jsonData),
+      jsonSchemaFile: jsonSchema?.name,
+      jsonDataFile: jsonData?.name, 
+      htmlFile: html?.name,
+      cssFile: css?.name,
+
       jsonSchema: await readFileAsync(jsonSchema),
+      jsonData: await readFileAsync(jsonData),
       html: await readFileAsync(html),
       css: await readFileAsync(css)
     };
@@ -95,7 +100,7 @@
 <span class="header">{title}</span>
 <nav id="buttons">
   <ul>
-    <li><a href="#/" on:click="{openLoadFolderDialog}">Load folder...</a></li>
+    <li><a href="#/" on:click="{openLoadFolderDialog}">Load files...</a></li>
     <li><a href="#/" on:click="{saveAll}">Save all...</a></li>
     <li><a href="#/" on:click="{processToHtml}">Process to HTML</a></li>
     <li><a href="#/" on:click="{processToPdf}">Process to PDF</a></li>
