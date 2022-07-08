@@ -56,7 +56,8 @@
       scrollBeyondLastLine: false,
       readOnly: false,
       model: jsonSchemaModel,
-      formatOnPaste: true
+      formatOnPaste: true,
+      formatOnType: true,
       // wordWrap: "wordWrapColumn",
       // wordWrapColumn: 60,
       // wordWrapMinified: true,

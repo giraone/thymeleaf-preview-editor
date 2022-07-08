@@ -29,7 +29,8 @@
       scrollBeyondLastLine: false,
       readOnly: false,
       model: cssModel,
-      formatOnPaste: true
+      formatOnPaste: true,
+      formatOnType: true
     });
 
     editor.addAction({
