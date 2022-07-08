@@ -13,6 +13,7 @@
 
 
   function initMonaco() {
+
     editor = monaco.editor.create(document.getElementById("container-" + id), {
       value: ["<!DOCTYPE html>",
             "<html lang=\"en\">",
@@ -32,7 +33,12 @@
       automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
       readOnly: false,
-      formatOnPaste: true
+      formatOnPaste: true,
+      formatOnType: true
+    });
+    editor.getModel().updateOptions({
+      insertSpaces: true,
+      tabSize: 1
     });
 
     editor.addAction({
