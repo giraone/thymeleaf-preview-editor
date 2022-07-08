@@ -63,17 +63,11 @@ export default {
     // Added start (hs)
     production && copy({
       targets: [{ 
-        src: 'node_modules/bulma/css/*', 
-        dest: 'public/vendor/bulma/css'
-      },{ 
         src: 'node_modules/@fortawesome/fontawesome-free/css/all.min.css', 
         dest: 'public/vendor/fontawesome/css' 
       },{ 
         src: 'node_modules/@fortawesome/fontawesome-free/webfonts/', 
         dest: 'public/vendor/fontawesome' 
-      },{ 
-        src: 'node_modules/@creativebulma/bulma-collapsible/dist/*', 
-        dest: 'public/vendor/creativebulma/bulma-collapsible' 
       },{ 
         src: 'node_modules/monaco-editor/min/vs/**/*', 
         dest: 'public/vendor/monaco-editor/vs' 
