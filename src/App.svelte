@@ -3,7 +3,7 @@
   import JsonEditor from './editor/JsonEditor.svelte';
   import HtmlEditor from './editor/HtmlEditor.svelte';
   import CssEditor from './editor/CssEditor.svelte';
- 
+
   import HtmlErrorMessages from './preview/HtmlErrorMessages.svelte';
   import HtmlPreview from './preview/HtmlPreview.svelte';
   import PdfPreview from './preview/PdfPreview.svelte';
@@ -12,8 +12,7 @@
 
   import { onMount } from 'svelte';
 
-  export let processJsonToHtmlUrl = 'http://localhost:8080/api/json-to-html';
-  export let processJsonToPdfUrl = 'http://localhost:8080/api/json-to-pdf';
+  import { processJsonToHtmlUrl, processJsonToPdfUrl } from './environment.js';
 
   let jsonSchemaEditor;
   let jsonDataEditor;
@@ -28,7 +27,7 @@
   let htmlErrorMessages;
   let htmlPreview;
   let pdfPreview;
-  
+ 
   let showPdf = false;
 
   const defaultJsonDataContent = ['{', '\t"name": "User of Thymeleaf Editor"', '}'].join('\n');
@@ -68,8 +67,8 @@
   };
 
   const previewHtml = function (formData) {
-    
-    const req = new XMLHttpRequest();   
+   
+    const req = new XMLHttpRequest();
     req.open('POST', processJsonToHtmlUrl);
     req.setRequestHeader('Accept', 'text/html');
 
@@ -94,7 +93,7 @@
   };
 
   const previewPdf = function (formData) {
-   
+  
     const req = new XMLHttpRequest();
     req.open('POST', processJsonToPdfUrl);
     req.setRequestHeader('Accept', 'application/pdf');
@@ -108,7 +107,7 @@
         if (arrayBuffer) {
           let dataUrl = URL.createObjectURL(new Blob([arrayBuffer], {
             type: "application/pdf"
-          }));      
+          }));     
           pdfPreview.showPdfFromUrl(dataUrl);
         }
       } else {
@@ -222,7 +221,7 @@
       {#if showPdf}
       <PdfPreview id="pdfPreview" bind:pdfPreview />
       {:else}
-      <HtmlPreview id="htmlPreview" bind:htmlPreview />   
+      <HtmlPreview id="htmlPreview" bind:htmlPreview />  
       {/if}
     </div>
     <div class="horizontalBar" id="h21"></div>

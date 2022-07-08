@@ -47,7 +47,7 @@
 
     const content = {
       jsonSchemaFile: jsonSchema?.name,
-      jsonDataFile: jsonData?.name, 
+      jsonDataFile: jsonData?.name,
       htmlFile: html?.name,
       cssFile: css?.name,
 

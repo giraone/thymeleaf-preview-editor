@@ -18,7 +18,7 @@
       language: "css",
       theme: "vs-dark",
       lineNumbers: "on",
-      automaticLayout: true, // built-in auto resize to parent container 
+      automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
       readOnly: false
     });

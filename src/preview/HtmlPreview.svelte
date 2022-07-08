@@ -18,7 +18,7 @@
 <iframe
   id="{id}" class="preview"
   title="HTML Preview"
-  srcdoc="<pre>No HTML preview yet!</pre>"
+  srcdoc="<pre>No HTML preview yet! Lookup in the window below for errors.</pre>"
 />
 
 <!-- CSS ------------------------------------------------------------------------- -->

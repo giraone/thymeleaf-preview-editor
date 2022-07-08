@@ -123,7 +123,7 @@ class Resizer {
   _storePos(pos, index1, index2) {
     // console.log(`>>> _storePos >>> ${pos} ${index1} ${index2}`);
     this.lastPos = pos;
-    if (this.resizeVertical) {  
+    if (this.resizeVertical) { 
       const cssOf1 = document.defaultView.getComputedStyle(this.elements[index1]);
       this.dims[index1] = parseInt(cssOf1.height, 10);
       const cssOf2 = document.defaultView.getComputedStyle(this.elements[index2]);
