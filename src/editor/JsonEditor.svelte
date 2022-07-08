@@ -34,7 +34,19 @@
       ]
     });
 
-    jsonSchemaModel = monaco.editor.createModel(defaultContent, 'json', modelUri);
+    // monaco.languages.json.api.setModeConfiguration({
+    //   documentFormattingEdits: true,
+    //   completionItems: true,
+    //   hovers: true,
+    //   documentSymbols: true,
+    //   diagnostics: true,
+    // });
+
+    const jsonSchemaModel = monaco.editor.createModel(defaultContent, 'json', modelUri);
+    jsonSchemaModel.updateOptions({
+      insertSpaces: true,
+      tabSize: 2
+    });
     // The monaco editor object
     editor = monaco.editor.create(document.getElementById('container-' + id), {
       language: 'json',
@@ -43,7 +55,12 @@
       automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
       readOnly: false,
-      model: jsonSchemaModel
+      model: jsonSchemaModel,
+      formatOnPaste: true
+      // wordWrap: "wordWrapColumn",
+      // wordWrapColumn: 60,
+      // wordWrapMinified: true,
+      // wrappingIndent: "indent",
     });
 
     editor.addAction({

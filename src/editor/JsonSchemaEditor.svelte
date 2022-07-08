@@ -285,7 +285,8 @@
       automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
       readOnly: false,
-      model: model
+      model: model,
+      formatOnPaste: true
     });
 
     editor.addAction({

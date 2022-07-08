@@ -12,6 +12,13 @@
   let fileReader;
 
   function initMonaco() {
+
+    const cssModel = monaco.editor.createModel("", "css");
+    cssModel.updateOptions({
+      insertSpaces: true,
+      tabSize: 2
+    });
+
     editor = monaco.editor.create(document.getElementById("container-" + id), {
       // value: ["body {", " width: 100vw;", "}", ".strong {", " color: red;", "}"].join("\n"),
       value: [".strong {", " color: red;", "}"].join("\n"),
@@ -20,7 +27,9 @@
       lineNumbers: "on",
       automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
-      readOnly: false
+      readOnly: false,
+      model: cssModel,
+      formatOnPaste: true
     });
 
     editor.addAction({

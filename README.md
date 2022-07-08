@@ -95,6 +95,7 @@ If you're building a single-page app (SPA) with multiple routes, sirv needs to b
 
 - 1.3.0 (2022-07-08)
   - environment.js introduced
+  - Support for formatting (`insertSpaces: true,  tabSize: 2`)
   - Dependency upgrades
 - 1.2.0 (2022-01-15)
   - First version with PDF preview

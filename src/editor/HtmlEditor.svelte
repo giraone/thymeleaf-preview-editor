@@ -31,7 +31,8 @@
       lineNumbers: "on",
       automaticLayout: true, // built-in auto resize to parent container
       scrollBeyondLastLine: false,
-      readOnly: false
+      readOnly: false,
+      formatOnPaste: true
     });
 
     editor.addAction({
