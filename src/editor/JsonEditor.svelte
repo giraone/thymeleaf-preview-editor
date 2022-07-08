@@ -109,13 +109,12 @@
   }
 
   function loadJsonSchema(schema) {
-    
+   
     if (jsonSchemaModel != null && editor.getModel() != null) {
       editor.setModel(null); // Detach old model
       jsonSchemaModel = null;
-      return;
     }
-    
+   
     const jsonSchema = JSON.parse(schema);
     let schemaUri = jsonSchema['$id'];
     if (schemaUri == null) {
