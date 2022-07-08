@@ -289,6 +289,10 @@
       formatOnPaste: true,
       formatOnType: true
     });
+    editor.getModel().updateOptions({
+      insertSpaces: true,
+      tabSize: 2
+    });
 
     editor.addAction({
       id: 'loadFile',

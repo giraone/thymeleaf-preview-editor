@@ -43,10 +43,7 @@
     // });
 
     const jsonSchemaModel = monaco.editor.createModel(defaultContent, 'json', modelUri);
-    jsonSchemaModel.updateOptions({
-      insertSpaces: true,
-      tabSize: 2
-    });
+    
     // The monaco editor object
     editor = monaco.editor.create(document.getElementById('container-' + id), {
       language: 'json',
@@ -62,6 +59,10 @@
       // wordWrapColumn: 60,
       // wordWrapMinified: true,
       // wrappingIndent: "indent",
+    });
+    jsonSchemaModel.updateOptions({
+      insertSpaces: true,
+      tabSize: 2
     });
 
     editor.addAction({
