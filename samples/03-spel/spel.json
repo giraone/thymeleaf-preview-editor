@@ -1,0 +1,23 @@
+{
+  "attr1": "Hello",
+  "attr2": "World",
+  "count": 1,
+  "isoDateAttr": "1998-02-15",
+  "list": [
+    {
+      "fruit": "apple",
+      "amount": 2,
+      "pricePerPiece": 4.50
+    },
+    {
+      "fruit": "banana",
+      "amount": 3,
+      "pricePerPiece": 4.50
+    }
+  ],
+  "sub1": {
+    "sub2" : {
+      "sub3": "123"
+    }
+  }
+}

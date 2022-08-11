@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+ <meta charset='utf-8'>
+ <meta name='viewport' content='width=device-width,initial-scale=1'>
+ <title>SpEL</title>
+ <style></style>
+</head>
+
+<body>
+ <dl>
+  <dt>${attr1}</dt>
+  <dd th:text="${attr1}"></dd>
+
+  <dt>${attr1 + ' ' + attr2}</dt>
+  <dd th:text="${attr1 + ' ' + attr2}"></dd>
+
+  <dt>${attr1.substring(0,2)}</dt>
+  <dd th:text="${attr1.substring(0,2)}"></dd>
+
+  <dt>${attr1.length() > 2 ? 'long' : 'short'}</dt>
+  <dd th:text="${attr1.length() > 2 ? 'long' : 'short'}"></dd>
+
+  <dt>${attr3?:'Moon'}</dt>
+  <dd th:text="${attr3?:'Moon'}"></dd>
+
+  <dt>${sub1.sub2.sub3}</dt>
+  <dd th:text="${sub1.sub2.sub3}"></dd>
+
+  <dt>${sub1['sub2']?.sub3}</dt>
+  <dd th:text="${sub1['sub2']?.sub3}"></dd>
+
+  <dt>${sub1['subx']?.sub3}</dt>
+  <dd th:text="${sub1['subx']?.sub3}"></dd>
+
+  <dt>!!! ${sub1['sub2.sub3']}</dt>
+  <dd th:text="${sub1['sub2.sub3']}"></dd>
+
+  <dt>${list[1].fruit}</dt>
+  <dd th:text="${list[1].fruit}"></dd>
+
+  <dt>${list[list.size()-1].fruit}</dt>
+  <dd th:text="${list[list.size()-1].fruit}"></dd>
+
+  <dt>!!! ${list.?[fruit == 'apple'].price}</dt>
+  <dd></dd>
+  
+  <dt>${T(java.lang.Math).random()}</dt>
+  <dd th:text="${T(java.lang.Math).random()}"></dd>
+
+  <dt>${new java.util.Date()}</dt>
+  <dd th:text="${new java.util.Date()}"></dd>
+
+  <dt>${new java.text.SimpleDateFormat('dd.MM').format(new java.util.Date())}</dt>
+  <dd th:text="${new java.text.SimpleDateFormat('dd.MM').format(new java.util.Date())}"></dd>
+
+  <dt>${T(java.time.format.DateTimeFormatter).ofPattern(...)}</dt>
+  <dd th:text="${T(java.time.format.DateTimeFormatter).ofPattern('dd.MM.yyyy').format(T(java.time.format.DateTimeFormatter).ISO_DATE.parse(isoDateAttr))}"></dd>
+
+ </dl>
+</body>
+
+</html>
