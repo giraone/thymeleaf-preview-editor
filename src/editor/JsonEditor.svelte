@@ -6,10 +6,13 @@
 
   // The id of the container (div or h)
   export let id = Math.floor(Math.random() * 1000000);
+  // The file name to be used
+  export let fileName = 'file.json';
   // The default JSON content
   export let defaultContent = '{}';
   // The default JSON schema content
   export let defaultJSONSchemaContent = '{}';
+
 
   // The monaco editor object
   let editor;
@@ -43,7 +46,7 @@
     // });
 
     const jsonSchemaModel = monaco.editor.createModel(defaultContent, 'json', modelUri);
-    
+
     // The monaco editor object
     editor = monaco.editor.create(document.getElementById('container-' + id), {
       language: 'json',
@@ -60,10 +63,7 @@
       // wordWrapMinified: true,
       // wrappingIndent: "indent",
     });
-    jsonSchemaModel.updateOptions({
-      insertSpaces: true,
-      tabSize: 2
-    });
+    setIndentationForModel();
 
     editor.addAction({
       id: 'loadFile',
@@ -120,7 +120,7 @@
   }
 
   function saveJsonData() {
-    saveFile(editor.getValue(), 'application/json', 'file.json');
+    saveFile(editor.getValue(), 'application/json', fileName);
   }
 
   function loadJsonData(data) {
@@ -157,6 +157,7 @@
       jsonSchemaModel.uri = modelUri;
     }
     editor.setModel(jsonSchemaModel);
+    setIndentationForModel();
   }
 
   function onLoadJsonData(customEvent) {
@@ -165,6 +166,13 @@
 
   function onLoadJsonSchema(customEvent) {
     loadJsonSchema(customEvent.detail);
+  }
+
+  function setIndentationForModel() {
+    editor.getModel().updateOptions({
+      insertSpaces: true,
+      tabSize: 2
+    });
   }
 
   //-- Lifecycle functions -----------------------------------------------------------
@@ -186,6 +194,9 @@
     },
     setSchema(value, schema) {
       loadJsonSchema(value, schema);
+    },
+    setFileName(newFileName) {
+      fileName = newFileName;
     }
   };
 </script>

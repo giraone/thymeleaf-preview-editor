@@ -4,6 +4,8 @@
 
   // The id of the container (div or h)
   export let id = Math.floor(Math.random() * 1000000);
+  // The file name to be used
+  export let fileName = 'file-schema.json';
   // The default JSON content
   export let defaultContent = '{}';
 
@@ -325,7 +327,7 @@
   }
 
   function saveJsonData() {
-    saveFile(editor.getValue(), 'application/json', 'file-schema.json');
+    saveFile(editor.getValue(), 'application/json', fileName);
   }
 
   function loadJsonData(jsonData) {
@@ -359,6 +361,9 @@
     },
     setSchema(value, schema) {
       loadJsonSchema(value, schema);
+    },
+    setFileName(newFileName) {
+      fileName = newFileName;
     }
   };
 </script>

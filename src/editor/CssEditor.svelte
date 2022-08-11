@@ -6,10 +6,13 @@
 
   // The id of the container (div or h)
   export let id = Math.floor(Math.random() * 1000000);
+  // The file name to be used
+  export let fileName = 'file.css';
   // The monaco editor object
   let editor;
   // The FileReader-Component object
   let fileReader;
+  
 
   function initMonaco() {
 
@@ -76,7 +79,7 @@
   }
 
   function saveCssData() {
-    saveFile(editor.getValue(), 'text/css', 'file.css');
+    saveFile(editor.getValue(), 'text/css', fileName);
   }
 
   function loadCssData(customEvent) {
@@ -105,6 +108,9 @@
       if (editor != null) {
         editor.setValue(value);
       }
+    },
+    setFileName(newFileName) {
+      fileName = newFileName;
     }
   };
 
