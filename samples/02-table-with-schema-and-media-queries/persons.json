@@ -4,7 +4,7 @@
 		{
 			"lastName": "Smith",
 			"firstName": "Joe",
-			"gender": "MALE",
+      "gender": "MALE",
       "dateOfBirth": "1998-02-15"
 		},
 		{
