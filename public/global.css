@@ -10,7 +10,7 @@
   --menu-color-hover: #D1D1D1;
   --resizer-color: lightsteelblue;
   --header-height: 2rem;
-  --border-size: 0.25rem;
+  --border-size: 4px;
   --scrollbar-width: 10px;
 }
 
@@ -27,9 +27,17 @@ blockquote, body, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, input
   padding: 0;
 }
 
+*,
+*:before,
+*:after {
+  box-model: border-box;
+}
+
 iframe {
   border-style: none;
   border-width: 0;
   margin: 0;
   padding: 0;
+  background-color: white;
+  color: black
 }
