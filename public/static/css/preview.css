@@ -89,17 +89,25 @@ div.card75-2 {
   height: calc(100% - var(--scrollbar-width));
 }
 
-.preview {
-  /* iframe behaves different - the scrollbar settings are defined by the content. */
-  width:  calc(100% - var(--scrollbar-width));
+div.preview {
+  width:  calc(100% - (var(--border-size) / 2)) - var(--scrollbar-width);
   height: calc(100% - var(--scrollbar-width));
+  overflow: hidden;
+}
+
+iframe.preview {
+  width: 100%;
+  height: 100%;
+  /* Wenn eine %-basierte Height gesetzt wird, klappt das horizontal Resizing nicht mehr. */
+  overflow-x: auto;
+  overflow-y: scroll;
 }
 
 .error-messages {
-  width:  calc(50% - (var(--border-size) / 2)) - var(--scrollbar-width);
+  width: calc(100% - (var(--border-size) / 2)) - var(--scrollbar-width);
   height: calc(100% - var(--scrollbar-width));
 
-  padding: 0.25rem;
+  padding: 5px;
 
   overflow-x: auto;
   overflow-y: scroll;
