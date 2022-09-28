@@ -134,6 +134,9 @@
       jsonSchemaModel = null;
     }
    
+    if (!schema) {
+      return;
+    }
     const jsonSchema = JSON.parse(schema);
     let schemaUri = jsonSchema['$id'];
     if (schemaUri == null) {
@@ -192,8 +195,8 @@
     setValue(value) {
       loadJsonData(value);
     },
-    setSchema(value, schema) {
-      loadJsonSchema(value, schema);
+    setSchema(jsonSchemaContent) {
+      loadJsonSchema(jsonSchemaContent);
     },
     setFileName(newFileName) {
       fileName = newFileName;

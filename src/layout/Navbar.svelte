@@ -11,6 +11,12 @@
   // The FileListing-Component object
   let fileListing;
 
+  function clearContent() {
+    dispatch('clearContent');
+    menuOpen = false;
+    return null;
+  }
+
   function openLoadFolderDialog() {
     fileListing.open(loadFolder);
     menuOpen = false;
@@ -100,10 +106,11 @@
 <span class="header">{title}</span>
 <nav id="buttons">
   <ul>
-    <li><a href="#/" on:click="{openLoadFolderDialog}">Load files...</a></li>
-    <li><a href="#/" on:click="{saveAll}">Save all...</a></li>
-    <li><a href="#/" on:click="{processToHtml}">Process to HTML</a></li>
-    <li><a href="#/" on:click="{processToPdf}">Process to PDF</a></li>
+    <li><a class="navButton" href="#/" on:click="{clearContent}">Clear</a></li>
+    <li><a class="navButton" href="#/" on:click="{openLoadFolderDialog}">Load files...</a></li>
+    <li><a class="navButton" href="#/" on:click="{saveAll}">Save all...</a></li>
+    <li><a class="navButton" href="#/" on:click="{processToHtml}">&gt; HTML</a></li>
+    <li><a class="navButton" href="#/" on:click="{processToPdf}">&gt; to PDF</a></li>
   </ul>
 </nav>
 
@@ -113,4 +120,9 @@
 <!-- CSS ------------------------------------------------------------------------- -->
 
 <style>
+ header nav#buttons ul li a {
+    min-width: 5rem;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
 </style>

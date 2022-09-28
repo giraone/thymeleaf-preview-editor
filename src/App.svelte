@@ -121,6 +121,23 @@
     req.send(formData);
   };
 
+  const clearContent = function () {
+  
+    jsonSchemaEditor.setValue('');
+    jsonDataEditor.setSchema(null);
+    jsonSchemaFile = 'file-schema.json';
+  
+    jsonDataEditor.setValue('{}');
+    jsonDataFile = 'file.json';
+  
+
+    htmlEditor.setValue('');
+    htmlFile = 'file.html';
+  
+    cssEditor.setValue('');
+    cssFile = 'file.css';
+  };
+
   const loadFolder = function (customEvent) {
     if (customEvent == null || customEvent.detail == null) {
       return;
@@ -189,8 +206,12 @@
 <!-- HTML ------------------------------------------------------------------------ -->
 
 <header>
-  <Navbar title="Thymeleaf Editor/Preview" on:loadFolder="{loadFolder}"
-    on:saveAll="{saveAll}" on:processToHtml="{processToHtml}" on:processToPdf="{processToPdf}" />
+  <Navbar title="Thymeleaf Preview"
+    on:clearContent="{clearContent}"
+    on:loadFolder="{loadFolder}"
+    on:saveAll="{saveAll}"
+    on:processToHtml="{processToHtml}"
+    on:processToPdf="{processToPdf}" />
     <span class="fileName">   Loaded files:</span>
     <span class="fileName">JSON schema = {jsonSchemaFile},</span>
     <span class="fileName">JSON data = {jsonDataFile},</span>
