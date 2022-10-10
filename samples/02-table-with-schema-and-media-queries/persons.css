@@ -2,7 +2,7 @@
 @media not pdf {
   .table th {
     background-color: blue;
-    color: white
+    color: white;
   }
   table.table-striped tr:nth-child(even) {
     background-color: lightgray;
@@ -17,7 +17,7 @@
   .table th {
     background-color: white;
     color: black;
-  } 
+  }
 }
 
 body {
@@ -46,16 +46,24 @@ table.table {
   padding: 2px;
 }
 
-table.fixed {table-layout: fixed; width: 100%;} /*Setting the table width is needed!*/
-table.fixed td {overflow: hidden;} /*Hide text outside the cell.*/
-table.fixed td:nth-of-type(1) {width: 35%;} /*Setting the width of column 1.*/
-table.fixed td:nth-of-type(2) {width: 35%;} /*Setting the width of column 2.*/
-table.fixed td:nth-of-type(3) {width: 15%;} /*Setting the width of column 3.*/
-table.fixed td:nth-of-type(4) {width: 15%;} /*Setting the width of column 4.*/
-
-@media not pdf {
-
-
-
+table.fixed {
+  table-layout: fixed;
+  /*Setting the table width is needed!*/
+  width: 100%;
 }
-
+table.fixed td {
+  /*Hide text outside the cell.*/
+  overflow: hidden;
+}
+table.fixed td:nth-of-type(1) {
+  width: 35%;
+}
+table.fixed td:nth-of-type(2) {
+  width: 35%;
+}
+table.fixed td:nth-of-type(3) {
+  width: 15%;
+}
+table.fixed td:nth-of-type(4) {
+  width: 15%;
+}
