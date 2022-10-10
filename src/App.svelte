@@ -123,14 +123,13 @@
 
   const clearContent = function () {
   
-    jsonSchemaEditor.setValue('');
+    jsonSchemaEditor.setValue('{}');
     jsonDataEditor.setSchema(null);
     jsonSchemaFile = 'file-schema.json';
   
     jsonDataEditor.setValue('{}');
     jsonDataFile = 'file.json';
   
-
     htmlEditor.setValue('');
     htmlFile = 'file.html';
   
@@ -143,23 +142,19 @@
       return;
     }
     const fileContents = customEvent.detail;
-    if (fileContents.jsonSchema) {
-      jsonSchemaEditor.setValue(fileContents.jsonSchema);
-      jsonDataEditor.setSchema(fileContents.jsonSchema);
-      jsonSchemaFile = fileContents.jsonSchemaFile;
-    }
-    if (fileContents.jsonData) {
-      jsonDataEditor.setValue(fileContents.jsonData);
-      jsonDataFile = fileContents.jsonDataFile;
-    }
-    if (fileContents.html) {
-      htmlEditor.setValue(fileContents.html);
-      htmlFile = fileContents.htmlFile;
-    }
-    if (fileContents.css) {
-      cssEditor.setValue(fileContents.css);
-      cssFile = fileContents.cssFile;
-    }
+
+    jsonSchemaEditor.setValue(fileContents.jsonSchema);
+    jsonSchemaFile = fileContents.jsonSchemaFile;
+    jsonDataEditor.setSchema(fileContents.jsonSchema);
+    
+    jsonDataEditor.setValue(fileContents.jsonData);
+    jsonDataFile = fileContents.jsonDataFile;
+
+    htmlEditor.setValue(fileContents.html);
+    htmlFile = fileContents.htmlFile;
+
+    cssEditor.setValue(fileContents.css);
+    cssFile = fileContents.cssFile;
   };
 
   const saveAll = function() {

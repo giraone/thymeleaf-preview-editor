@@ -338,11 +338,6 @@
     loadJsonData(customEvent.detail);
   }
 
-  function loadJsonSchema(jsonData, jsonSchema) {
-    editor.setSchema(jsonSchema);
-    editor.setValue(jsonData);
-  }
-
   //-- Lifecycle functions -----------------------------------------------------------
 
   onMount(async () => {
@@ -358,9 +353,6 @@
     },
     setValue(value) {
       loadJsonData(value);
-    },
-    setSchema(value, schema) {
-      loadJsonSchema(value, schema);
     },
     setFileName(newFileName) {
       fileName = newFileName;

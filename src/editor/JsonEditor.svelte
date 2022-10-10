@@ -24,7 +24,7 @@
 
   function initMonaco() {
     // configure the JSON language support with schemas and schema associations
-    const jsonSchemaUriString = 'file://content/default-json-schema.json';
+    const jsonSchemaUriString = 'file://content/json-schema/empty-schema.json';
     const modelUri = monaco.Uri.parse(jsonSchemaUriString); // a made up unique URI for our model
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
       validate: true,
@@ -129,7 +129,7 @@
 
   function loadJsonSchema(schema) {
    
-    if (jsonSchemaModel != null && editor.getModel() != null) {
+    if (jsonSchemaModel != null || editor.getModel() != null) {
       editor.setModel(null); // Detach old model
       jsonSchemaModel = null;
     }
@@ -139,8 +139,14 @@
     }
     const jsonSchema = JSON.parse(schema);
     let schemaUri = jsonSchema['$id'];
+     // Schema URIs for monaco must be unique!
+     // If not: the error "Error: ModelService: Cannot add model because it already exists!" occurs.
     if (schemaUri == null) {
+      // For schemas without any $id, we generate a complete new $id
       schemaUri = 'file://content/schema-' + Math.floor(Math.random() * 1000000) + '.json';
+    } else {
+      // For schemas with an $id, we a random suffix for the $id
+      schemaUri = schemaUri.replace('.json', Math.floor(Math.random() * 1000000) + '.json');
     }
     const modelUri = monaco.Uri.parse(schemaUri);
     monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
