@@ -52,6 +52,7 @@ The backend URLs for HTML and PDF rendering are controlled using [src/environmen
 ## Build and running in dev mode
 
 ```bash
+nvm use v16.15.1 # or sth. later
 npm install
 npm run dev
 # or
