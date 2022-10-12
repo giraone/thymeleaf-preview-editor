@@ -15,11 +15,11 @@
 
 <!-- HTML ------------------------------------------------------------------------ -->
 
-<iframe
-  id="{id}" class="preview"
-  title="HTML Preview"
-  srcdoc="<pre>No HTML preview yet! Lookup in the window below for errors.</pre>"
-/>
+<div class="preview">
+  <iframe id="{id}" class="preview" title="HTML Preview"
+    srcdoc="&lt;pre&gt;No HTML preview yet! Lookup in the window below for errors.&lt;/pre&gt;"
+  ></iframe>
+</div>
 
 <!-- CSS ------------------------------------------------------------------------- -->
 
