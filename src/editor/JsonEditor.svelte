@@ -135,7 +135,7 @@
     }
    
     if (!schema) {
-      return;
+      schema = '{}';
     }
     const jsonSchema = JSON.parse(schema);
     let schemaUri = jsonSchema['$id'];
