@@ -11,6 +11,9 @@
   --resizer-color: lightsteelblue;
   --header-height: 2rem;
   --border-size: 4px;
+  --scaler-width: 15vw;
+  --scaler-height: 1.5rem;
+  --scaler-margin: 25px;
   --scrollbar-width: 10px;
 }
 
